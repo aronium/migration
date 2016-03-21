@@ -64,8 +64,8 @@ namespace Aronium.Migration.Commands
             var builder = new SQLiteConnectionStringBuilder();
             builder.FailIfMissing = true;
             builder.DataSource = Config.Instance.Database;
-            builder.Pooling = true;
-            
+            builder.Version = 3;
+
             return builder.ToString();
         }
 

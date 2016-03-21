@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.SQLite;
+using System.IO;
 
 namespace Aronium.Migration.Commands
 {
@@ -12,7 +14,21 @@ namespace Aronium.Migration.Commands
 
             Console.Write("Database file: ");
             Config.Instance.Database = Console.ReadLine();
-            
+
+            var fullPath = Path.GetFullPath(Config.Instance.Database);
+
+            Console.WriteLine($"Selected file: {fullPath}");
+
+            if (!File.Exists(fullPath))
+            {
+                Console.Write("Specified file do not exists. Do you want to create new database file? Y/N ");
+
+                if(Console.ReadKey().Key == ConsoleKey.Y)
+                {
+                    SQLiteConnection.CreateFile(fullPath);
+                }
+            }
+
             Config.Save();
 
             Console.WriteLine();
