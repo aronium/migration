@@ -1,0 +1,1 @@
+﻿SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration]

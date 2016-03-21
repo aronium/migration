@@ -1,0 +1,1 @@
+﻿SELECT COUNT(*) FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Migration]') AND type in (N'U')

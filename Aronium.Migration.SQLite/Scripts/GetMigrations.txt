@@ -1,0 +1,1 @@
+﻿SELECT [ID],[Version],[Description],[FileName],[Date] FROM [Migration]

@@ -1,6 +1,6 @@
-﻿using Aronium.Migration.Properties;
+﻿using Aronium.Migration.SQLite.Properties;
 using System;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.IO;
 
 namespace Aronium.Migration.Commands
@@ -38,7 +38,7 @@ namespace Aronium.Migration.Commands
         /// <returns>True if connection is valid, otherwise false.</returns>
         protected bool IsConnectionValid()
         {
-            using (var conn = new SqlConnection(this.ConnectionString))
+            using (var conn = new SQLiteConnection(this.ConnectionString))
             {
                 try
                 {
@@ -61,18 +61,12 @@ namespace Aronium.Migration.Commands
         /// <returns>Connection string.</returns>
         protected string CreateConnectionString()
         {
-            SqlConnectionStringBuilder cb = new SqlConnectionStringBuilder();
-            cb.DataSource = Config.Instance.Server;
-            cb.InitialCatalog = Config.Instance.Database;
-            cb.MultipleActiveResultSets = true;
-            cb.UserID = Config.Instance.Username;
-            cb.Password = Config.Instance.Password;
-            cb.Pooling = true;
-
-            // No timeout
-            cb.ConnectTimeout = 0;
-
-            return cb.ToString();
+            var builder = new SQLiteConnectionStringBuilder();
+            builder.FailIfMissing = true;
+            builder.DataSource = Config.Instance.Database;
+            builder.Pooling = true;
+            
+            return builder.ToString();
         }
 
         /// <summary>
@@ -85,14 +79,14 @@ namespace Aronium.Migration.Commands
 
             try
             {
-                using (var connection = new SqlConnection(this.ConnectionString))
+                using (var connection = new SQLiteConnection(this.ConnectionString))
                 {
                     connection.Open();
 
-                    using (SqlCommand command = connection.CreateCommand())
+                    using (SQLiteCommand command = connection.CreateCommand())
                     {
                         command.CommandText = Resources.MigrationTableExists;
-                        SqlDataReader reader = command.ExecuteReader();
+                        SQLiteDataReader reader = command.ExecuteReader();
 
                         reader.Read();
                         if (reader.HasRows)
@@ -121,7 +115,7 @@ namespace Aronium.Migration.Commands
         {
             try
             {
-                using (var connection = new SqlConnection(this.ConnectionString))
+                using (var connection = new SQLiteConnection(this.ConnectionString))
                 {
                     if (!MigrationTableExists())
                     {
@@ -130,7 +124,7 @@ namespace Aronium.Migration.Commands
                         Console.WriteLine("Creating Migrations table...");
                         Console.WriteLine();
 
-                        using (SqlCommand command = connection.CreateCommand())
+                        using (SQLiteCommand command = connection.CreateCommand())
                         {
                             command.CommandText = Resources.CreateMigrationsTable;
                             command.ExecuteNonQuery();
@@ -161,7 +155,7 @@ namespace Aronium.Migration.Commands
         {
             decimal currentVersion = 0;
 
-            using (var connection = new SqlConnection(this.ConnectionString))
+            using (var connection = new SQLiteConnection(this.ConnectionString))
             {
                 connection.Open();
 

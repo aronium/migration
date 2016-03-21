@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
-using System.IO;
+﻿using System.IO;
 
 namespace Aronium.Migration.Commands
 {
@@ -36,6 +31,5 @@ namespace Aronium.Migration.Commands
         }
 
         public abstract void Run(InputArguments args);
-
     }
 }
