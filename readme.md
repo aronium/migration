@@ -59,23 +59,17 @@ Running "new" command without specified version name will add new file with majo
 ```
 > migration status
 ```
-This command will output current migration status like:
-```
- |======================================================================================================|
- | ID | Version | Description               | FileName                           | Date                 |
- |------------------------------------------------------------------------------------------------------|
- | 1  | 1.0     | My First Migration Script | 1_0__My_First_Migration_Script.sql | 21.03.2016. 12:45.15 |
- ```
+This command will output current migration status with executed and pending migration scripts.
 
 #### Up command
 ```
 > migration up
 ```
-Executing `up` command will apply newer migrations then the current version.
+Running `up` command will apply newer migrations then the current version.
 
 
 #### Pending command
 ```
 > migration pending
 ```
-Executing `pending` command will execute all pending migrations.
+Running `pending` command will execute all pending migrations.
