@@ -2,7 +2,7 @@
 
 namespace Aronium.Migration.Commands
 {
-    [Command("bootstrap")]
+    [Command("bootstrap", "Initializes database and configuration")]
     internal class BootstrapCommand : DataCommandBase
     {
         public override void Run(InputArguments args)

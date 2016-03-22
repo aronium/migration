@@ -1,1 +1,1 @@
-﻿SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration]
+﻿SELECT MAX(CAST(Version AS REAL)) FROM Migration

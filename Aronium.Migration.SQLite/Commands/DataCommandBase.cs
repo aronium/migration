@@ -91,7 +91,7 @@ namespace Aronium.Migration.Commands
                         reader.Read();
                         if (reader.HasRows)
                         {
-                            migrationTableExists = (int)reader[0] > 0;
+                            migrationTableExists = (long)reader[0] > 0;
                         }
 
                         reader.Close();
@@ -155,6 +155,9 @@ namespace Aronium.Migration.Commands
         {
             decimal currentVersion = 0;
 
+            if (!MigrationTableExists())
+                CreateMigrationTable();
+
             using (var connection = new SQLiteConnection(this.ConnectionString))
             {
                 connection.Open();
@@ -170,7 +173,7 @@ namespace Aronium.Migration.Commands
                         {
                             var record = reader[0];
                             if (record != Convert.DBNull)
-                                currentVersion = (decimal)record;
+                                currentVersion = Convert.ToDecimal(record);
                         }
 
                         reader.Close();
@@ -192,7 +195,7 @@ namespace Aronium.Migration.Commands
 
             var extractedVersion = fileName.Remove(fileName.IndexOf("__")).Replace("_", ".");
 
-            return decimal.Parse(extractedVersion);
+            return decimal.Parse(extractedVersion, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Aronium.Migration.Commands
 {
-    [Command("new")]
+    [Command("new", "Creates new migration script with optional name provided")]
     public class CreateScriptCommand : DataCommandBase
     {
         public override void Run(InputArguments args)
@@ -30,7 +30,7 @@ namespace Aronium.Migration.Commands
                     if (fileName.IndexOf("__") > 0)
                     {
                         var extractedVersion = fileName.Remove(fileName.IndexOf("__")).Replace("_", ".");
-                        currentVersion = decimal.Parse(extractedVersion);
+                        currentVersion = decimal.Parse(extractedVersion, System.Globalization.CultureInfo.InvariantCulture);
                     }
                 }
                 catch (Exception ex)
@@ -51,7 +51,7 @@ namespace Aronium.Migration.Commands
                 currentVersion = Math.Round(((decimal)((int)currentVersion + 1)), 0);
 
                 // Create string version using migration file name rules
-                var stringVersion = currentVersion.ToString("0.0####").Replace(".", "_");
+                var stringVersion = currentVersion.ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture).Replace(".", "_");
 
                 // Create path
                 var path = Path.Combine(ScriptsDirectoryPath, string.Format("{0}__{1}.sql", stringVersion, fileName.Replace(" ", "_")));

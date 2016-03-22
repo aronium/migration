@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Aronium.Migration.Models;
+using Aronium.Migration.SQLite.Properties;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
-using Aronium.Migration.Properties;
-using Aronium.Migration.Models;
+using System.Data.SQLite;
 
 namespace Aronium.Migration.Commands
 {
@@ -34,9 +32,9 @@ namespace Aronium.Migration.Commands
             }
         }
 
-        private IEnumerable<Models.MigrationStatus> GetMigrationStatus()
+        private IEnumerable<MigrationStatus> GetMigrationStatus()
         {
-            using (var connection = new SqlConnection(this.ConnectionString))
+            using (var connection = new SQLiteConnection(this.ConnectionString))
             {
                 connection.Open();
 

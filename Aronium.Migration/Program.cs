@@ -17,6 +17,8 @@ namespace Aronium.Migration
             }
             else
             {
+                var attrs = CommandHelper.List().ToList();
+
                 // Declare namespace to search types in
                 string @namespace = "Aronium.Migration.Commands";
 

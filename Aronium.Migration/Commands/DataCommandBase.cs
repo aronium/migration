@@ -198,7 +198,7 @@ namespace Aronium.Migration.Commands
 
             var extractedVersion = fileName.Remove(fileName.IndexOf("__")).Replace("_", ".");
 
-            return decimal.Parse(extractedVersion);
+            return decimal.Parse(extractedVersion, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         #endregion

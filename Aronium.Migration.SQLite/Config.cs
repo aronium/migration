@@ -8,7 +8,6 @@ namespace Aronium.Migration
         #region - Fields -
 
         private static Config _instance;
-        private string _password; 
 
         #endregion
 
@@ -88,7 +87,7 @@ namespace Aronium.Migration
 
             if (File.Exists(filename))
             {
-                using (TextReader reader = new System.IO.StreamReader(filename))
+                using (TextReader reader = new StreamReader(filename))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Config));
 

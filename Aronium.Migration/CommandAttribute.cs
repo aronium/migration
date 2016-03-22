@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Aronium.Migration
 {
@@ -13,6 +10,13 @@ namespace Aronium.Migration
             this.Name = name;
         }
 
+        public CommandAttribute(string name, string description) : this(name)
+        {
+            this.Description = description;
+        }
+
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Aronium.Migration.Commands
 {
-    [Command("up")]
+    [Command("up", "Executes migration scripts")]
     public class MigrateCommand : DataCommandBase
     {
         #region - Fields -

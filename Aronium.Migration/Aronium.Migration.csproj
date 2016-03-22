@@ -92,6 +92,7 @@
     <Compile Include="Commands\EncryptCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Extensions\TableParseExtension.cs" />
+    <Compile Include="Helpers\CommandHelper.cs" />
     <Compile Include="InputArguments.cs" />
     <Compile Include="Models\MigrationStatus.cs" />
     <Compile Include="Program.cs" />
