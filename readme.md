@@ -13,7 +13,7 @@ It uses similar commands as [MyBatis Migrations](http://www.mybatis.org/migratio
 ## Usage
 
 #### Bootstrap
-Navigate to directory containing `migration.exe` 
+Navigate to directory containing `migration.exe` and execute the following command:
 ```
 > migration bootstrap
 ```
@@ -35,3 +35,12 @@ Write file name or a full path to your SQLite database
 
 If you select `Y` SQLite database will be automatically created on specified location.
 
+#### New
+Navigate to directory containing `migration.exe` and execute the following command:
+```
+> migration -eew "My First Migration Script"
+```
+This will create file under ./Migrations/Scripts directory named
+"*1_0__My_First_Migration_Script.sql*"
+
+Running "new" command without specified version name will add new file with major version automatically generated.
