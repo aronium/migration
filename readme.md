@@ -7,7 +7,8 @@ It uses similar commands as [MyBatis Migrations](http://www.mybatis.org/migratio
  * `bootstrap` - Initializes database configuration
  * `status` - Gets the migrations status
  * `new` - Creates new migration script
- * `up` - Executes migration scripts 
+ * `up` - Executes new migration scripts 
+ * `pending` - Creates all non executed migration script
  * `help` - Displays help
 
 Commands without additional parameters can be executed with command name only, while commands that contains parameters must be executed with leading minus sign (-).
