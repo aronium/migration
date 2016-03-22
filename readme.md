@@ -12,6 +12,10 @@ It uses similar commands as [MyBatis Migrations](http://www.mybatis.org/migratio
 
 Commands without additional parameters can be executed with command name only, while commands that contains parameters must be executed with leading minus sign (-).
 
+**IMPORTANT:** *bootstrap* command must be executed before other commands so database credentials and properties are set properly.
+
+Note that *Aronium.Migration.SQLite* uses shared files from *Aronium.Migration* project, added as linked files.
+
 ## Usage
 
 Before executing any command from console, navigate to directory containing `migration.exe` or specifiy its full path. 
@@ -62,3 +66,9 @@ This command will output current migration status like:
  |------------------------------------------------------------------------------------------------------|
  | 1  | 1.0     | My First Migration Script | 1_0__My_First_Migration_Script.sql | 21.03.2016. 12:45.15 |
  ```
+
+#### Up command
+```
+> migration up
+```
+Executing `up` command will apply all pending migrations.
