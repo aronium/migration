@@ -40,7 +40,7 @@ Navigate to directory containing `migration.exe` and execute the following comma
 ```
 > migration -eew "My First Migration Script"
 ```
-This will create file under ./Migrations/Scripts directory named
-"*1_0__My_First_Migration_Script.sql*"
+This command will output the result as:
+> New script added. Path: C:\...\Migrations\Scripts\1_0__My_First_Migration_Script.sql
 
 Running "new" command without specified version name will add new file with major version automatically generated.
