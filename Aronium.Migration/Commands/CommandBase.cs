@@ -10,10 +10,11 @@ namespace Aronium.Migration.Commands
         private string _rootPath;
         private string _scriptsDirectoryPath;
 
-        public const string SEPARATOR_LINES = "------------------------------------------------------------------------";
+        internal const string SEPARATOR_LINES = "------------------------------------------------------------------------";
 
         /// <summary>
-        /// Gets script directory path.
+        /// Gets or sets script directory path.
+        /// <para>If value is not set, default directory will be used.</para>
         /// </summary>
         protected string ScriptsDirectoryPath
         {
@@ -22,6 +23,10 @@ namespace Aronium.Migration.Commands
                 if (_scriptsDirectoryPath == null)
                     _scriptsDirectoryPath = Path.Combine(this.RootPath, "Migrations", "Scripts");
                 return _scriptsDirectoryPath;
+            }
+            set
+            {
+                _scriptsDirectoryPath = value;
             }
         }
 
@@ -77,7 +82,7 @@ namespace Aronium.Migration.Commands
             MigrationStatus status = new MigrationStatus()
             {
                 Version = GetFileVersion(file).ToVersionString(),
-                FileName = info.Name,
+                FileName = name,
                 Description = description
             };
 

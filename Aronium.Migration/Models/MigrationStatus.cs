@@ -33,5 +33,24 @@ namespace Aronium.Migration.Models
         /// Gets or sets execution date.
         /// </summary>
         public DateTime? Date { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether migration is equal to specified migration status.
+        /// </summary>
+        /// <param name="migrationStatus">Status to compare.</param>
+        /// <returns>True if is equal, otherwise false.</returns>
+        public bool IsEqualTo(MigrationStatus migrationStatus)
+        {
+            return this.Version == migrationStatus.Version && this.Module == migrationStatus.Module;
+        }
+
+        /// <summary>
+        /// Gets string representation of this instance.
+        /// </summary>
+        /// <returns>String representing this instance.</returns>
+        public override string ToString()
+        {
+            return $"{Version} - {Description}";
+        }
     }
 }

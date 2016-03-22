@@ -59,6 +59,12 @@
     <Compile Include="..\Aronium.Migration\Commands\HelpCommand.cs">
       <Link>Commands\HelpCommand.cs</Link>
     </Compile>
+    <Compile Include="..\Aronium.Migration\Commands\MigrateCommandBase.cs">
+      <Link>Commands\MigrateCommandBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Aronium.Migration\Commands\MigratePendingCommand.cs">
+      <Link>Commands\MigratePendingCommand.cs</Link>
+    </Compile>
     <Compile Include="..\Aronium.Migration\Commands\StatusCommandBase.cs">
       <Link>Commands\StatusCommandBase.cs</Link>
     </Compile>
@@ -82,6 +88,7 @@
     </Compile>
     <Compile Include="Commands\BootstrapCommand.cs" />
     <Compile Include="Commands\DataCommandBase.cs" />
+    <Compile Include="Commands\MigrateCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

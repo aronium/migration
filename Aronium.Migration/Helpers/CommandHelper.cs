@@ -8,6 +8,11 @@ namespace Aronium.Migration
 {
     public static class CommandHelper
     {
+        /// <summary>
+        /// List all available commands in specified namespace.
+        /// </summary>
+        /// <param name="ns">Namespace.</param>
+        /// <returns>List of available commands as command attributes.</returns>
         public static IEnumerable<CommandAttribute> List(string ns = "Aronium.Migration.Commands")
         {
             // Find all classes in specified namespace
@@ -22,11 +27,21 @@ namespace Aronium.Migration
             return attrs.Cast<CommandAttribute>();
         }
 
+        /// <summary>
+        /// Gets version string.
+        /// </summary>
+        /// <param name="value">Version value.</param>
+        /// <returns>Version string.</returns>
         public static string ToVersionString(this decimal value)
         {
             return value.ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Gets version from version string.
+        /// </summary>
+        /// <param name="value">Version.</param>
+        /// <returns>Version value.</returns>
         public static decimal ToVersion(this string value)
         {
             return Convert.ToDecimal(value, System.Globalization.CultureInfo.InvariantCulture);

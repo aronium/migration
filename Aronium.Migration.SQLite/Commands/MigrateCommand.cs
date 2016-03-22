@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+﻿using Aronium.Migration.SQLite.Properties;
+using System;
+using System.Data.SQLite;
 using System.IO;
-using Aronium.Migration.Properties;
 using System.Text.RegularExpressions;
 
 namespace Aronium.Migration.Commands
@@ -24,11 +21,11 @@ namespace Aronium.Migration.Commands
 
             var scriptText = File.ReadAllText(file);
 
-            using (var connection = new SqlConnection(this.ConnectionString))
+            using (var connection = new SQLiteConnection(this.ConnectionString))
             {
                 connection.Open();
 
-                scriptText = Regex.Replace(scriptText, @"\bGO\b", SCRIPT_SPLIT_CHAR);
+                scriptText = Regex.Replace(scriptText, @";", SCRIPT_SPLIT_CHAR);
                 string[] commands = scriptText.Split(new string[] { SCRIPT_SPLIT_CHAR }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var commandText in commands)
@@ -53,8 +50,14 @@ namespace Aronium.Migration.Commands
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = Resources.LogMigration;
+
+                    var status = ParseFileName(file);
+
                     command.Parameters.Clear();
-                    command.Parameters.Add(new SqlParameter("@scriptName", info.Name));
+                    command.Parameters.AddWithValue("version", status.Version);
+                    command.Parameters.AddWithValue("description", status.Description);
+                    command.Parameters.AddWithValue("module", status.Module);
+                    command.Parameters.AddWithValue("fileName", status.FileName);
 
                     command.ExecuteNonQuery();
                 }

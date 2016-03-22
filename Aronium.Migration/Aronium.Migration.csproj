@@ -87,6 +87,8 @@
     <Compile Include="Commands\CreateScriptCommand.cs" />
     <Compile Include="Commands\DataCommandBase.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\MigrateCommandBase.cs" />
+    <Compile Include="Commands\MigratePendingCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\StatusCommandBase.cs" />
     <Compile Include="Config.cs" />

@@ -71,4 +71,11 @@ This command will output current migration status like:
 ```
 > migration up
 ```
-Executing `up` command will apply all pending migrations.
+Executing `up` command will apply newer migrations then the current version.
+
+
+#### Pending command
+```
+> migration pending
+```
+Executing `pending` command will execute all pending migrations.
