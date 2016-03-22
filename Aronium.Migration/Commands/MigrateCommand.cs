@@ -31,7 +31,7 @@ namespace Aronium.Migration.Commands
 
             Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.ScriptsDirectoryPath));
 
-            var files = Directory.GetFiles(ScriptsDirectoryPath, "*.sql").OrderBy(x => x);
+            var files = GetFiles();
 
             var success = true;
 

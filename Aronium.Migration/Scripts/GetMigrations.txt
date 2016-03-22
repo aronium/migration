@@ -1,1 +1,1 @@
-﻿SELECT [ID],[Version],[Description],[FileName],[Date] FROM [Migration]
+﻿SELECT [ID],[Version],[Description],[FileName],[Module],[Date] FROM [Migration]

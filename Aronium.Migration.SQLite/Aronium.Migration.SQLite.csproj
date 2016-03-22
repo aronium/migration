@@ -59,6 +59,9 @@
     <Compile Include="..\Aronium.Migration\Commands\HelpCommand.cs">
       <Link>Commands\HelpCommand.cs</Link>
     </Compile>
+    <Compile Include="..\Aronium.Migration\Commands\StatusCommandBase.cs">
+      <Link>Commands\StatusCommandBase.cs</Link>
+    </Compile>
     <Compile Include="..\Aronium.Migration\Extensions\EncryptionExtension.cs">
       <Link>Extensions\EncryptionExtension.cs</Link>
     </Compile>

@@ -1,7 +1,10 @@
 ﻿using Aronium.Migration.Properties;
 using System;
+using System.Linq;
 using System.Data.SqlClient;
 using System.IO;
+using System.Collections.Generic;
+using Aronium.Migration.Models;
 
 namespace Aronium.Migration.Commands
 {
@@ -27,10 +30,11 @@ namespace Aronium.Migration.Commands
                 }
                 return _connectionString;
             }
-        } 
+        }
+
         #endregion
 
-        #region - Private methods -
+        #region - Protected methods -
 
         /// <summary>
         /// Gets a value indicating whether connection is valid.
@@ -185,20 +189,6 @@ namespace Aronium.Migration.Commands
             }
 
             return currentVersion;
-        }
-        
-        /// <summary>
-        /// Gets script version from file name.
-        /// </summary>
-        /// <param name="fileName">File name to parse.</param>
-        /// <returns>Script version.</returns>
-        protected decimal GetFileVersion(string fileName)
-        {
-            fileName = new FileInfo(fileName).Name;
-
-            var extractedVersion = fileName.Remove(fileName.IndexOf("__")).Replace("_", ".");
-
-            return decimal.Parse(extractedVersion, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         #endregion

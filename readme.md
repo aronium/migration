@@ -24,19 +24,19 @@ Before executing any command from console, navigate to directory containing `mig
 ```
 > migration bootstrap
 ```
-**SQL Server**
+*SQL Server*
 
 Executing `bootstrap` command will ask for a server and credentials to use
 Follow the instructions to define connection parameters like server name, database and user credentials.
 
-**SQLite**
+*SQLite*
 
 Executing `bootstrap` command will ask for a database file (SQLite database)
 
 > Database file:
 
 Write file name or a full path to your SQLite database
-> Selected file: C:\...\demo.sqlite
+> Selected file: C:\\...\demo.sqlite
 > 
 > Specified file do not exists. Do you want to create new database file? Y/N
 
@@ -47,7 +47,7 @@ If you select `Y` SQLite database will be automatically created on specified loc
 > migration -new "My First Migration Script"
 ```
 This command will output the result as:
-> New script added. Path: C:\...\Migrations\Scripts\1_0__My_First_Migration_Script.sql
+> New script added. Path: C:\\...\Migrations\Scripts\1_0__My_First_Migration_Script.sql
 
 **Make sure you execute "new" command with leading minus sign before command name, eg. *-new "script file name"*, so fie name is parsed correctly**
 

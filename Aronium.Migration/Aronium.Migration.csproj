@@ -88,6 +88,7 @@
     <Compile Include="Commands\DataCommandBase.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
+    <Compile Include="Commands\StatusCommandBase.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Commands\EncryptCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />

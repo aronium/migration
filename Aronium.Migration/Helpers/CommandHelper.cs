@@ -1,4 +1,5 @@
 ﻿using Aronium.Migration.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,16 @@ namespace Aronium.Migration
                         select t.GetCustomAttributes(typeof(CommandAttribute), true).First();
 
             return attrs.Cast<CommandAttribute>();
+        }
+
+        public static string ToVersionString(this decimal value)
+        {
+            return value.ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static decimal ToVersion(this string value)
+        {
+            return Convert.ToDecimal(value, System.Globalization.CultureInfo.InvariantCulture);
         }
     }
 }
