@@ -38,9 +38,10 @@ If you select `Y` SQLite database will be automatically created on specified loc
 #### New
 Navigate to directory containing `migration.exe` and execute the following command:
 ```
-> migration -eew "My First Migration Script"
+> migration -new "My First Migration Script"
 ```
 This command will output the result as:
 > New script added. Path: C:\...\Migrations\Scripts\1_0__My_First_Migration_Script.sql
 
+**Make sure you execute "new" command as *-new* (with minus infront of command), so fie name is parsed correctly**
 Running "new" command without specified version name will add new file with major version automatically generated.
