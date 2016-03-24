@@ -10,19 +10,24 @@ namespace Aronium.Migration.Commands
     {
         public override void Run(InputArguments args)
         {
+            List<MigrationStatus> migrations = new List<MigrationStatus>();
+
             if (this.MigrationTableExists())
             {
-                var migrations = GetMigrationStatus().ToList();
+                migrations.AddRange(GetMigrationStatus());
+            }
 
-                foreach(var file in GetFiles())
+            foreach (var file in GetFiles())
+            {
+                if (!migrations.Any(x => x.Version == GetFileVersion(file).ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture)))
                 {
-                    if (!migrations.Any(x => x.Version == GetFileVersion(file).ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture)))
-                    {
-                        migrations.Add(ParseFileName(file));
-                    }
+                    migrations.Add(ParseFileName(file));
                 }
+            }
 
-                var table = migrations.OrderBy(x=>x.Version.ToVersion()).ToStringTable(
+            if (migrations.Any())
+            {
+                var table = migrations.OrderBy(x => x.Version.ToVersion()).ToStringTable(
                     s => s.ID,
                     s => s.Version,
                     s => s.Description,
