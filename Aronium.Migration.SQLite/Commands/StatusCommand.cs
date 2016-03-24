@@ -8,7 +8,7 @@ namespace Aronium.Migration.Commands
     {
         protected override IEnumerable<MigrationStatus> GetMigrationStatus()
         {
-            return GetExecutedMigrations();
+            return GetExecutedMigrations(Module);
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using Aronium.Migration.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 namespace Aronium.Migration.Commands
 {
     public abstract class StatusCommandBase : DataCommandBase
     {
+        protected string Module { get; set; }
+
         public override void Run(InputArguments args)
         {
+            Module = args["module"];
+
             List<MigrationStatus> migrations = new List<MigrationStatus>();
 
             if (this.MigrationTableExists())
@@ -19,7 +22,9 @@ namespace Aronium.Migration.Commands
 
             foreach (var file in GetFiles())
             {
-                if (!migrations.Any(x => x.Version == GetFileVersion(file).ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture)))
+                var version = GetFileVersion(file).ToVersionString();
+
+                if (!migrations.Any(x => x.Version == version))
                 {
                     migrations.Add(ParseFileName(file));
                 }

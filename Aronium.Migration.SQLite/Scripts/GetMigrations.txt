@@ -1,1 +1,1 @@
-﻿SELECT [ID],[Version],[Description],[FileName],[Module],[Date] FROM [Migration]
+﻿SELECT [ID],[Version],[Description],[FileName],[Module],[Date] FROM [Migration] WHERE :Module IS NULL OR [Module]=:Module

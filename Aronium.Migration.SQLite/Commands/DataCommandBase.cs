@@ -185,12 +185,13 @@ namespace Aronium.Migration.Commands
 
             return currentVersion;
         }
-        
+
         /// <summary>
         /// Gets executed migrations.
         /// </summary>
+        /// <param name="module">Module for which migrations are selected. If not set, all migrations are returned.</param>
         /// <returns>List of executed migrations.</returns>
-        protected IEnumerable<MigrationStatus> GetExecutedMigrations()
+        protected IEnumerable<MigrationStatus> GetExecutedMigrations(string module = null)
         {
             using (var connection = new SQLiteConnection(this.ConnectionString))
             {
@@ -199,6 +200,8 @@ namespace Aronium.Migration.Commands
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = Resources.GetMigrations;
+
+                    command.Parameters.AddWithValue("Module", module ?? Convert.DBNull);
 
                     using (var reader = command.ExecuteReader())
                     {

@@ -3,12 +3,14 @@
 	[Version],
 	[Description],
 	[FileName],
+	[Module],
 	[Date]
 ) 
 VALUES 
 (
 	REPLACE(SUBSTRING(@scriptName, 0, CHARINDEX('__', @scriptName)), '_', '.'),
 	REPLACE(SUBSTRING(@scriptName, CHARINDEX('__', @scriptName) + 2, LEN(@scriptName) - (CHARINDEX('__', @scriptName) + 5)), '_', ' '),
-	@scriptName,
+	@ScriptName,
+	@Module,
 	GETDATE()
 )

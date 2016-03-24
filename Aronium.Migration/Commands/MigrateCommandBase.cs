@@ -9,6 +9,11 @@ namespace Aronium.Migration.Commands
 
         protected const string SCRIPT_SPLIT_CHAR = "###";
 
+        /// <summary>
+        /// Gets or sets module.
+        /// </summary>
+        protected string Module { get; set; }
+
         #endregion
 
         private void ReadMigrationScripts()
@@ -93,6 +98,8 @@ namespace Aronium.Migration.Commands
             {
                 return;
             }
+
+            Module = args["module"];
 
             Console.WriteLine(string.Format("\nConnected to {0}\n", Config.Instance.Database));
 

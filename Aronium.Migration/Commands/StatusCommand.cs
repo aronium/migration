@@ -1,7 +1,5 @@
 ﻿using Aronium.Migration.Models;
-using Aronium.Migration.Properties;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 
 namespace Aronium.Migration.Commands
 {
@@ -10,7 +8,7 @@ namespace Aronium.Migration.Commands
     {
         protected override IEnumerable<MigrationStatus> GetMigrationStatus()
         {
-            return GetExecutedMigrations();
+            return GetExecutedMigrations(Module);
         }
     }
 }

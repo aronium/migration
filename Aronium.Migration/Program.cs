@@ -9,14 +9,14 @@ namespace Aronium.Migration
     {
         static void Main(string[] args)
         {
-            var arguments = new InputArguments(args);
-
             if (args.Length == 0)
             {
                 Console.WriteLine("No command specified. Please provide command to execute.");
             }
             else
             {
+                var arguments = new InputArguments(args);
+
                 // Declare namespace to search types in
                 string @namespace = "Aronium.Migration.Commands";
 

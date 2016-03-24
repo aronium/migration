@@ -54,7 +54,8 @@ namespace Aronium.Migration.Commands
                 {
                     command.CommandText = Resources.LogMigration;
                     command.Parameters.Clear();
-                    command.Parameters.Add(new SqlParameter("@scriptName", info.Name));
+                    command.Parameters.AddWithValue("ScriptName", info.Name);
+                    command.Parameters.AddWithValue("Module", Module ?? Convert.DBNull);
 
                     command.ExecuteNonQuery();
                 }
