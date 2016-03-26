@@ -1,1 +1,1 @@
-﻿SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration]
+﻿SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration] WHERE @Module IS NULL OR Module=@Module

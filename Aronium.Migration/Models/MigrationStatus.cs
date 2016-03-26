@@ -25,6 +25,11 @@ namespace Aronium.Migration.Models
         public string FileName { get; set; }
 
         /// <summary>
+        /// Gets or sets full migration file path.
+        /// </summary>
+        public string Path { get; set; }
+
+        /// <summary>
         /// Gets or sets module for which this script was executed.
         /// </summary>
         public string Module { get; set; }

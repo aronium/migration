@@ -1,4 +1,5 @@
 ﻿using Aronium.Migration.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Aronium.Migration.Commands
         internal const string SEPARATOR_LINES = "------------------------------------------------------------------------";
 
         /// <summary>
-        /// Gets or sets script directory path.
+        /// Gets or sets migration script directory path.
         /// <para>If value is not set, default directory will be used.</para>
         /// </summary>
-        protected string ScriptsDirectoryPath
+        protected string MigrationsDirectory
         {
             get
             {
@@ -62,9 +63,12 @@ namespace Aronium.Migration.Commands
         /// Gets all migration scripts from script directory.
         /// </summary>
         /// <returns>List of files.</returns>
-        protected IEnumerable<string> GetFiles()
+        protected IEnumerable<MigrationStatus> GetFiles()
         {
-            return Directory.GetFiles(ScriptsDirectoryPath, "*.sql").OrderBy(x => x);
+            foreach(var file in Directory.GetFiles(MigrationsDirectory, "*.sql", SearchOption.AllDirectories).OrderBy(x => x))
+            {
+                yield return ParseFileName(file);
+            }
         }
 
         /// <summary>
@@ -79,10 +83,25 @@ namespace Aronium.Migration.Commands
             var name = info.Name;
             var description = name.Replace(info.Extension, string.Empty).Substring(name.IndexOf("__") + 2).Replace("_", " ");
 
+            var pathWithoutRootDirectory = file.Replace(MigrationsDirectory, "");
+            string[] dirs = pathWithoutRootDirectory.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Check for mudule as a sub directory of main scripts directory
+            string module = null;
+
+            // If subfolder exists, using directory name as a module
+            if (dirs.Length > 0)
+            {
+                // Take first directory level as a module name, no need to go deeper in subdirectories, modules should have unique names
+                module = dirs[0];
+            }
+
             MigrationStatus status = new MigrationStatus()
             {
                 Version = GetFileVersion(file).ToVersionString(),
                 FileName = name,
+                Path = file,
+                Module = module,
                 Description = description
             };
 

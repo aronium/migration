@@ -160,8 +160,9 @@ namespace Aronium.Migration.Commands
         /// <summary>
         /// Gets current database version, the max version number from database.
         /// </summary>
+        /// <param name="module">Module for which current version is returned.</param>
         /// <returns>Current database version number.</returns>
-        protected decimal GetCurrentVersion()
+        protected decimal GetCurrentVersion(string module)
         {
             decimal currentVersion = 0;
 
@@ -172,6 +173,8 @@ namespace Aronium.Migration.Commands
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = Resources.GetCurrentVersion;
+
+                    command.Parameters.AddWithValue("Module", module ?? Convert.DBNull);
 
                     using (var reader = command.ExecuteReader(System.Data.CommandBehavior.SingleResult | System.Data.CommandBehavior.CloseConnection))
                     {

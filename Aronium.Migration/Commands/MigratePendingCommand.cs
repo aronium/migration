@@ -21,14 +21,5 @@ namespace Aronium.Migration.Commands
                 return _migrations;
             }
         }
-
-        protected override bool ShouldExecute(string fileName)
-        {
-            var migrationStatus = ParseFileName(fileName);
-
-            var isExecuted = Migrations.Any(x => x.IsEqualTo(migrationStatus));
-
-            return !isExecuted;
-        }
     }
 }

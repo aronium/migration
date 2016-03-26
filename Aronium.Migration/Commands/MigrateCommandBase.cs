@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aronium.Migration.Models;
+using System;
 using System.IO;
 
 namespace Aronium.Migration.Commands
@@ -25,19 +26,19 @@ namespace Aronium.Migration.Commands
 
             var startTime = DateTime.Now;
 
-            Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.ScriptsDirectoryPath));
+            Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.MigrationsDirectory));
 
             var files = GetFiles();
 
             var success = true;
 
-            foreach (var file in files)
+            foreach (var migration in files)
             {
                 try
                 {
-                    if (ShouldExecute(file))
+                    if (ShouldExecute(migration))
                     {
-                        ExecuteScript(file);
+                        Execute(migration);
                     }
                 }
                 catch (Exception ex)
@@ -59,7 +60,7 @@ namespace Aronium.Migration.Commands
                 Console.WriteLine(string.Format(" * Migrations status:          {0}", (success) ? "SUCCESS" : "FAILURE"));
                 Console.WriteLine(string.Format(" * Execution time:             {0} sec.", (int)totalTime.TotalSeconds));
                 Console.WriteLine(string.Format(" * Migration completed at:     {0}", DateTime.Now));
-                Console.WriteLine(string.Format(" * Current version:            {0}", double.Parse(GetCurrentVersion().ToString())));
+                //Console.WriteLine(string.Format(" * Current version:            {0}", double.Parse(GetCurrentVersion().ToString())));
                 Console.WriteLine(SEPARATOR_LINES);
             }
         }
@@ -76,9 +77,9 @@ namespace Aronium.Migration.Commands
 
         private bool ScriptDirectoryExists()
         {
-            if (!Directory.Exists(this.ScriptsDirectoryPath))
+            if (!Directory.Exists(this.MigrationsDirectory))
             {
-                Console.WriteLine(string.Format("ERROR Unable to locate directory on path \"{0}\"", ScriptsDirectoryPath));
+                Console.WriteLine(string.Format("ERROR Unable to locate directory \"{0}\"", MigrationsDirectory));
 
                 return false;
             }
@@ -86,9 +87,14 @@ namespace Aronium.Migration.Commands
             return true;
         }
 
-        protected abstract bool ShouldExecute(string fileName);
+        protected virtual bool ShouldExecute(MigrationStatus migration)
+        {
+            decimal currentVersion = GetCurrentVersion(migration.Module);
 
-        protected abstract void ExecuteScript(string file);
+            return migration.Version.ToVersion() > currentVersion;
+        }
+
+        protected abstract void Execute(MigrationStatus migration);
 
         #region - Public methods -
 

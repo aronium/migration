@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.IO;
 using Aronium.Migration.Properties;
 using System.Text.RegularExpressions;
+using Aronium.Migration.Models;
 
 namespace Aronium.Migration.Commands
 {
@@ -14,15 +15,13 @@ namespace Aronium.Migration.Commands
     {
         #region - Private methods -
 
-        protected override void ExecuteScript(string file)
+        protected override void Execute(MigrationStatus migration)
         {
-            var info = new FileInfo(file);
-
             Console.WriteLine();
-            Console.WriteLine(string.Format("========== Applying \"{0}\" ==========", info.Name));
+            Console.WriteLine(string.Format("========== Applying \"{0}\" ==========", migration.FileName));
             Console.WriteLine();
 
-            var scriptText = File.ReadAllText(file);
+            var scriptText = File.ReadAllText(migration.Path);
 
             using (var connection = new SqlConnection(this.ConnectionString))
             {
@@ -54,7 +53,7 @@ namespace Aronium.Migration.Commands
                 {
                     command.CommandText = Resources.LogMigration;
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("ScriptName", info.Name);
+                    command.Parameters.AddWithValue("ScriptName", migration.FileName);
                     command.Parameters.AddWithValue("Module", Module ?? Convert.DBNull);
 
                     command.ExecuteNonQuery();
@@ -64,15 +63,6 @@ namespace Aronium.Migration.Commands
             }
         }
 
-        protected override bool ShouldExecute(string fileName)
-        {
-            decimal currentVersion = GetCurrentVersion();
-
-            decimal fileVersion = GetFileVersion(fileName);
-
-            return fileVersion > currentVersion;
-        }
-        
         #endregion
     }
 }

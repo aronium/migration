@@ -1,1 +1,1 @@
-﻿SELECT MAX(CAST(Version AS REAL)) FROM Migration
+﻿SELECT MAX(CAST(Version AS REAL)) FROM Migration WHERE (:Module IS NULL AND Module IS NULL) OR Module = :Module COLLATE NOCASE

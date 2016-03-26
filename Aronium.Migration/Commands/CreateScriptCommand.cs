@@ -10,6 +10,7 @@ namespace Aronium.Migration.Commands
         public override void Run(InputArguments args)
         {
             var fileName = args["-new"];
+            var module = args["-module"];
 
             if (string.IsNullOrEmpty(fileName))
             {
@@ -20,10 +21,10 @@ namespace Aronium.Migration.Commands
 
             if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrWhiteSpace(fileName))
             {
-                if (!Directory.Exists(ScriptsDirectoryPath))
-                    Directory.CreateDirectory(ScriptsDirectoryPath);
-                
-                var currentVersion = this.GetCurrentVersion();
+                if (!Directory.Exists(MigrationsDirectory))
+                    Directory.CreateDirectory(MigrationsDirectory);
+
+                var currentVersion = this.GetCurrentVersion(module);
 
                 try
                 {
@@ -39,22 +40,20 @@ namespace Aronium.Migration.Commands
                     return;
                 }
 
-                // Check if there are any pending scripts
-                var pendingScripts = from file in Directory.GetFiles(ScriptsDirectoryPath) where GetFileVersion(file) > currentVersion select file;
+                // Extract module related migrations
+                var migrations = GetFiles().Where(x => x.Module == module).OrderBy(x => x.Version.ToVersion()).ToList();
+
                 // If there are pending scripts in directory, get last one, and use its version number as reference
-                if (pendingScripts.Any())
+                if (migrations.Any())
                 {
-                    currentVersion = GetFileVersion(pendingScripts.Last());
+                    currentVersion = migrations.Last().Version.ToVersion();
                 }
 
                 // Increment major version by 1
                 currentVersion = Math.Round(((decimal)((int)currentVersion + 1)), 0);
 
-                // Create string version using migration file name rules
-                var stringVersion = currentVersion.ToString("0.0#####", System.Globalization.CultureInfo.InvariantCulture).Replace(".", "_");
-
-                // Create path
-                var path = Path.Combine(ScriptsDirectoryPath, string.Format("{0}__{1}.sql", stringVersion, fileName.Replace(" ", "_")));
+                // Create path, check module as subdirectory
+                var path = Path.Combine(MigrationsDirectory, module ?? string.Empty, string.Format("{0}__{1}.sql", currentVersion.ToVersionString(), fileName.Replace(" ", "_")));
 
                 // Create file on specified path
                 File.Create(path);

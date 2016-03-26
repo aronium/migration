@@ -1,4 +1,5 @@
-﻿using Aronium.Migration.SQLite.Properties;
+﻿using Aronium.Migration.Models;
+using Aronium.Migration.SQLite.Properties;
 using System;
 using System.Data.SQLite;
 using System.IO;
@@ -11,15 +12,13 @@ namespace Aronium.Migration.Commands
     {
         #region - Private methods -
 
-        protected override void ExecuteScript(string file)
+        protected override void Execute(MigrationStatus migration)
         {
-            var info = new FileInfo(file);
-
             Console.WriteLine();
-            Console.WriteLine(string.Format("========== Applying \"{0}\" ==========", info.Name));
+            Console.WriteLine(string.Format("========== Applying \"{0}\" ==========", migration.FileName));
             Console.WriteLine();
 
-            var scriptText = File.ReadAllText(file);
+            var scriptText = File.ReadAllText(migration.Path);
 
             using (var connection = new SQLiteConnection(this.ConnectionString))
             {
@@ -51,13 +50,11 @@ namespace Aronium.Migration.Commands
                 {
                     command.CommandText = Resources.LogMigration;
 
-                    var status = ParseFileName(file);
-
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("version", status.Version);
-                    command.Parameters.AddWithValue("description", status.Description);
-                    command.Parameters.AddWithValue("module", Module);
-                    command.Parameters.AddWithValue("fileName", status.FileName);
+                    command.Parameters.AddWithValue("version", migration.Version);
+                    command.Parameters.AddWithValue("description", migration.Description);
+                    command.Parameters.AddWithValue("module", migration.Module ?? Module);
+                    command.Parameters.AddWithValue("fileName", migration.FileName);
 
                     command.ExecuteNonQuery();
                 }
@@ -66,15 +63,20 @@ namespace Aronium.Migration.Commands
             }
         }
 
-        protected override bool ShouldExecute(string fileName)
-        {
-            decimal currentVersion = GetCurrentVersion();
-
-            decimal fileVersion = GetFileVersion(fileName);
-
-            return fileVersion > currentVersion;
-        }
-        
         #endregion
+
+        public override void Run(InputArguments args)
+        {
+            var dir = args["dir"];
+            var database = args["database"];
+
+            if (!string.IsNullOrEmpty(dir))
+                MigrationsDirectory = dir;
+
+            if (!string.IsNullOrEmpty(database))
+                Database = database;
+
+            base.Run(args);
+        }
     }
 }

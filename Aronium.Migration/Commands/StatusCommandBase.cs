@@ -20,13 +20,11 @@ namespace Aronium.Migration.Commands
                 migrations.AddRange(GetMigrationStatus());
             }
 
-            foreach (var file in GetFiles())
+            foreach (var status in GetFiles())
             {
-                var version = GetFileVersion(file).ToVersionString();
-
-                if (!migrations.Any(x => x.Version == version))
+                if (!migrations.Any(x => x.Version == status.Version && x.Module == status.Module))
                 {
-                    migrations.Add(ParseFileName(file));
+                    migrations.Add(status);
                 }
             }
 
