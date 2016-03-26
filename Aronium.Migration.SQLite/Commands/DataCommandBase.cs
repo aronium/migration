@@ -32,6 +32,9 @@ namespace Aronium.Migration.Commands
             }
         }
 
+        /// <summary>
+        /// Gets or sets database.
+        /// </summary>
         protected string Database
         {
             get

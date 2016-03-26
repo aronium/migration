@@ -13,6 +13,7 @@ namespace Aronium.Migration.Commands
         #region - Fields -
 
         private string _connectionString;
+        private string _database;
 
         #endregion
 
@@ -29,6 +30,21 @@ namespace Aronium.Migration.Commands
                     _connectionString = CreateConnectionString();
                 }
                 return _connectionString;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets database.
+        /// </summary>
+        protected string Database
+        {
+            get
+            {
+                return _database ?? Config.Instance.Database;
+            }
+            set
+            {
+                _database = value;
             }
         }
 

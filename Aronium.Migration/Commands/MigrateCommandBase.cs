@@ -58,9 +58,8 @@ namespace Aronium.Migration.Commands
             {
                 Console.WriteLine(SEPARATOR_LINES);
                 Console.WriteLine(string.Format(" * Migrations status:          {0}", (success) ? "SUCCESS" : "FAILURE"));
-                Console.WriteLine(string.Format(" * Execution time:             {0} sec.", (int)totalTime.TotalSeconds));
+                Console.WriteLine(string.Format(" * Execution time:             {0} ms", (int)totalTime.TotalMilliseconds));
                 Console.WriteLine(string.Format(" * Migration completed at:     {0}", DateTime.Now));
-                //Console.WriteLine(string.Format(" * Current version:            {0}", double.Parse(GetCurrentVersion().ToString())));
                 Console.WriteLine(SEPARATOR_LINES);
             }
         }
@@ -107,7 +106,7 @@ namespace Aronium.Migration.Commands
 
             Module = args["module"];
 
-            Console.WriteLine(string.Format("\nConnected to {0}\n", Config.Instance.Database));
+            Console.WriteLine(string.Format("\nConnected to {0}\n", Database));
 
             if (!ValidateMigrationTableExistance())
             {
