@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Aronium.Migration.Models;
+using Aronium.Migration.Properties;
+using System;
 using System.Data.SqlClient;
 using System.IO;
-using Aronium.Migration.Properties;
 using System.Text.RegularExpressions;
-using Aronium.Migration.Models;
 
 namespace Aronium.Migration.Commands
 {
@@ -35,7 +32,6 @@ namespace Aronium.Migration.Commands
                     if (!string.IsNullOrEmpty(commandText.Trim()))
                     {
                         Console.WriteLine(commandText);
-                        Console.WriteLine();
 
                         using (var command = connection.CreateCommand())
                         {

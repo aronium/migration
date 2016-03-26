@@ -48,6 +48,8 @@ namespace Aronium.Migration.Commands
 
                     success = false;
 
+                    Environment.ExitCode = 10;
+
                     break;
                 }
             }
