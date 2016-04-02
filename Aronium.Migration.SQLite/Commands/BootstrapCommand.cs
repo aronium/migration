@@ -21,11 +21,20 @@ namespace Aronium.Migration.Commands
 
             if (!File.Exists(fullPath))
             {
-                Console.Write("Specified file do not exists. Do you want to create new database file? Y/N ");
+                bool isAnsweredCorrectly = false;
 
-                if(Console.ReadKey().Key == ConsoleKey.Y)
+                while (!isAnsweredCorrectly)
                 {
-                    SQLiteConnection.CreateFile(fullPath);
+                    Console.Write("Specified file do not exists. Do you want to create new database file? Y/N ");
+
+                    var input = Console.ReadLine();
+
+                    isAnsweredCorrectly = input.StartsWith("y", StringComparison.OrdinalIgnoreCase) || input.StartsWith("n", StringComparison.OrdinalIgnoreCase);
+
+                    if (input.Equals("y", StringComparison.OrdinalIgnoreCase) || input.Equals("yes", StringComparison.OrdinalIgnoreCase))
+                    {
+                        SQLiteConnection.CreateFile(fullPath);
+                    }
                 }
             }
 
