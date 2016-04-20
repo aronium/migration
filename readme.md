@@ -41,7 +41,7 @@ Write file name or a full path to your SQLite database
 > 
 > Specified file do not exists. Do you want to create new database file? Y/N
 
-If you select `Y` SQLite database will be automatically created on specified location.
+If you press `Y`, SQLite database will be automatically created on specified location.
 
 #### New command
 ```
@@ -50,7 +50,7 @@ If you select `Y` SQLite database will be automatically created on specified loc
 This command will output the result as:
 > New script added. Path: C:\\...\Migrations\Scripts\1_0__My_First_Migration_Script.sql
 
-**Make sure you execute "new" command with leading minus sign before command name, eg. *-new "script file name"*, so fie name is parsed correctly**
+**Make sure you execute "new" command with leading minus sign before command name, eg. *-new "script file name"*, so file name is parsed correctly**
 
 If leading minus sign is ommited, you will be asked to enter file name again.
 
