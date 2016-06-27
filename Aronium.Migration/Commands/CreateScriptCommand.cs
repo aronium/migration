@@ -53,7 +53,7 @@ namespace Aronium.Migration.Commands
                 currentVersion = Math.Round(((decimal)((int)currentVersion + 1)), 0);
 
                 // Create path, check module as subdirectory
-                var path = Path.Combine(MigrationsDirectory, module ?? string.Empty, string.Format("{0}__{1}.sql", currentVersion.ToVersionString(), fileName.Replace(" ", "_")));
+                var path = Path.Combine(MigrationsDirectory, module ?? string.Empty, string.Format("{0}__{1}.sql", currentVersion.ToVersionString().Replace(".", "_"), fileName.Replace(" ", "_")));
 
                 // Create file on specified path
                 File.Create(path);

@@ -90,7 +90,8 @@ namespace Aronium.Migration.Commands
             string module = null;
 
             // If subfolder exists, using directory name as a module
-            if (dirs.Length > 0)
+            // Split characters contains at least 1 item as file name. if directory exists, dirs array will contain 2 items in array, directory and file name.
+            if (dirs.Length > 1)
             {
                 // Take first directory level as a module name, no need to go deeper in subdirectories, modules should have unique names
                 module = dirs[0];

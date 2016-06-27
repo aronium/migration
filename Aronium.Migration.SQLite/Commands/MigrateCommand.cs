@@ -53,8 +53,8 @@ namespace Aronium.Migration.Commands
                     command.Parameters.Clear();
                     command.Parameters.AddWithValue("version", migration.Version);
                     command.Parameters.AddWithValue("description", migration.Description);
-                    command.Parameters.AddWithValue("module", migration.Module ?? Module);
                     command.Parameters.AddWithValue("fileName", migration.FileName);
+                    command.Parameters.AddWithValue("module", migration.Module ?? Module);
 
                     command.ExecuteNonQuery();
                 }
