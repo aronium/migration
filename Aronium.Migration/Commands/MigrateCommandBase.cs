@@ -1,6 +1,7 @@
 ﻿using Aronium.Migration.Models;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Aronium.Migration.Commands
 {
@@ -28,7 +29,8 @@ namespace Aronium.Migration.Commands
 
             Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.MigrationsDirectory));
 
-            var files = GetFiles();
+            // Order files by versino, not by file name, as in case files are sorted by file name 10 is lower then 9 (string comparison)
+            var files = GetFiles().OrderBy(x => x.Version.ToVersion());
 
             var success = true;
 
