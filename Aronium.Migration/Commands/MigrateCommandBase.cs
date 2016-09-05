@@ -29,7 +29,7 @@ namespace Aronium.Migration.Commands
 
             Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.MigrationsDirectory));
 
-            // Order files by versino, not by file name, as in case files are sorted by file name 10 is lower then 9 (string comparison)
+            // Order files by version number, not by file name. In case files are sorted by file name "10_0__" is lower then "9_0__" (using string comparison)
             var files = GetFiles().OrderBy(x => x.Version.ToVersion());
 
             var success = true;
