@@ -65,10 +65,33 @@ namespace Aronium.Migration.Commands
         /// <returns>List of files.</returns>
         protected IEnumerable<MigrationStatus> GetFiles()
         {
-            foreach(var file in Directory.GetFiles(MigrationsDirectory, "*.sql", SearchOption.AllDirectories).OrderBy(x => x))
+            List<MigrationStatus> list = new List<MigrationStatus>();
+
+            Console.WriteLine(string.Format("Reading migration scripts from directory \"{0}\"", this.MigrationsDirectory));
+            // Execute scripts from root directory first
+            foreach (var file in Directory.GetFiles(MigrationsDirectory, "*.sql", SearchOption.TopDirectoryOnly))
             {
-                yield return ParseFileName(file);
+                list.Add(ParseFileName(file));
             }
+
+            // Order files by version number, not by file name. In case files are sorted by file name "10_0__" is lower then "9_0__" (using string comparison)
+            list = list.OrderBy(x => x.Version.ToVersion()).ToList();
+
+            foreach (var dir in Directory.GetDirectories(MigrationsDirectory, "*", SearchOption.AllDirectories))
+            {
+                List<MigrationStatus> sublist = new List<MigrationStatus>();
+
+                Console.WriteLine(string.Format("Reading migration scripts from sub directory \"{0}\"", dir));
+
+                foreach (var file in Directory.GetFiles(dir, "*.sql", SearchOption.AllDirectories))
+                {
+                    sublist.Add(ParseFileName(file));
+                }
+
+                list.AddRange(sublist.OrderBy(x => x.Version.ToVersion()));
+            }
+
+            return list;
         }
 
         /// <summary>
