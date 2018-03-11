@@ -28,9 +28,9 @@ Before executing any command from console, navigate to directory containing `mig
 *SQL Server*
 
 Executing `bootstrap` command will ask for a server and credentials to use.
-Follow the instructions to define connection parameters like server name, database and user credentials.
+Follow the instructions to define connection parameters like server name, database and user credentials. Once you have entered your credentials and server properties, they will be saved in "migration.properties" file, and can be used when required.
 
-You can also use input parameters to set database connection properties, as follows:
+You can also use input parameters to provide database connection properties without a config file, as follows:
 ```
 -server SERVER_NAME -database DATABASE_NAME -username USERNAME -password PASSWORD
 ```
