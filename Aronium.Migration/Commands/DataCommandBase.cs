@@ -246,6 +246,53 @@ namespace Aronium.Migration.Commands
             }
         }
 
+        /// <summary>
+        /// Attempts to read connection properties from input arguments and sets Config properties accordingly.
+        /// <para>Input arguments must contain the following keys: -server SERVER_NAME -database DATABASE_NAME -username USERNAME -password PASSWORD</para>
+        /// </summary>
+        /// <param name="args">Args to set connection properties from.</param>
+        /// <returns>True if all properties are available and set, otherwise false.</returns>
+        internal static bool TrySetConnectionParameters(InputArguments args)
+        {
+            if (args.Contains("server"))
+            {
+                Config.Instance.Server = args["server"];
+            }
+            else
+            {
+                return false;
+            }
+
+            if (args.Contains("database"))
+            {
+                Config.Instance.Database = args["database"];
+            }
+            else
+            {
+                return false;
+            }
+
+            if (args.Contains("username"))
+            {
+                Config.Instance.Username = args["username"];
+            }
+            else
+            {
+                return false;
+            }
+
+            if (args.Contains("password"))
+            {
+                Config.Instance.Password = args["password"];
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }

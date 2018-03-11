@@ -38,6 +38,11 @@ namespace Aronium.Migration
 
                     if (commandBase != null)
                     {
+                        if (commandBase is DataCommandBase)
+                        {
+                            DataCommandBase.TrySetConnectionParameters(arguments);
+                        }
+
                         commandBase.Run(arguments);
                     }
                 }

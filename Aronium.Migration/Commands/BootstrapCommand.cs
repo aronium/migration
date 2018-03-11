@@ -5,24 +5,39 @@ namespace Aronium.Migration.Commands
     [Command("bootstrap", "Initializes database and configuration")]
     internal class BootstrapCommand : DataCommandBase
     {
+        //public BootstrapCommand(InputArguments args) : base(args) { }
+
         public override void Run(InputArguments args)
         {
-            Console.WriteLine(SEPARATOR_LINES);
-            Console.WriteLine("Begin bootstrap process. Set login details.");
-            Console.WriteLine(SEPARATOR_LINES);
-            Console.Write("Server name: ");
-            Config.Instance.Server = Console.ReadLine();
+            if (TrySetConnectionParameters(args))
+            {
+                Console.WriteLine(SEPARATOR_LINES);
+                Console.WriteLine("Begin bootstrap process. Reading connection properties from arguments...");
+                Console.WriteLine(SEPARATOR_LINES);
+                Console.WriteLine("Server name: " + Config.Instance.Server);
+                Console.WriteLine("Database name: " + Config.Instance.Database);
+                Console.WriteLine("Username: " + Config.Instance.Username);
+                Console.Write("Password: " + Config.Instance.Password);
+            }
+            else
+            {
+                Console.WriteLine(SEPARATOR_LINES);
+                Console.WriteLine("Begin bootstrap process. Set login details.");
+                Console.WriteLine(SEPARATOR_LINES);
+                Console.Write("Server name: ");
+                Config.Instance.Server = Console.ReadLine();
 
-            Console.Write("Database name: ");
-            Config.Instance.Database = Console.ReadLine();
+                Console.Write("Database name: ");
+                Config.Instance.Database = Console.ReadLine();
 
-            Console.Write("Username: ");
-            Config.Instance.Username = Console.ReadLine();
+                Console.Write("Username: ");
+                Config.Instance.Username = Console.ReadLine();
 
-            Console.Write("Password: ");
-            Config.Instance.Password = ReadConsolePassword(string.Empty);
+                Console.Write("Password: ");
+                Config.Instance.Password = ReadConsolePassword(string.Empty);
 
-            Config.Save();
+                Config.Save();
+            }
 
             Console.WriteLine();
             Console.WriteLine(SEPARATOR_LINES);
@@ -31,7 +46,7 @@ namespace Aronium.Migration.Commands
             {
                 Console.WriteLine("Bootstrap completed.");
             }
-            
+
             Console.WriteLine(SEPARATOR_LINES);
         }
 

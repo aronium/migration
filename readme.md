@@ -27,8 +27,13 @@ Before executing any command from console, navigate to directory containing `mig
 ```
 *SQL Server*
 
-Executing `bootstrap` command will ask for a server and credentials to use
+Executing `bootstrap` command will ask for a server and credentials to use.
 Follow the instructions to define connection parameters like server name, database and user credentials.
+
+You can also use input parameters to set database connection properties, as follows:
+```
+-server SERVER_NAME -database DATABASE_NAME -username USERNAME -password PASSWORD
+```
 
 *SQLite*
 
