@@ -20,8 +20,10 @@ namespace Aronium.Migration.Commands
 
         private void ReadMigrationScripts()
         {
-            if (!ScriptDirectoryExists())
+            if (!Directory.Exists(this.MigrationsDirectory))
             {
+                Console.WriteLine(string.Format("Migration directory \"{0}\" does not exists. No scripts found.", this.MigrationsDirectory));
+
                 return;
             }
 
@@ -70,18 +72,6 @@ namespace Aronium.Migration.Commands
             if (!MigrationTableExists())
             {
                 return CreateMigrationTable();
-            }
-
-            return true;
-        }
-
-        private bool ScriptDirectoryExists()
-        {
-            if (!Directory.Exists(this.MigrationsDirectory))
-            {
-                Console.WriteLine(string.Format("ERROR Unable to locate directory \"{0}\"", MigrationsDirectory));
-
-                return false;
             }
 
             return true;
