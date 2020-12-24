@@ -248,6 +248,25 @@ namespace Aronium.Migration.Commands
             }
         }
 
+        /// <summary>
+        /// Attempts to read connection properties from input arguments and sets Config properties accordingly.
+        /// <para>Input arguments must contain the following keys: -database DATABASE_FILE_PATH</para>
+        /// </summary>
+        /// <param name="args">Args to set connection properties from.</param>
+        /// <returns>True if all properties are available and set, otherwise false.</returns>
+        internal static bool TrySetConnectionParameters(InputArguments args)
+        {
+            if (args.Contains("database"))
+            {
+                Config.Instance.Database = args["database"];
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
         #endregion
     }
 }

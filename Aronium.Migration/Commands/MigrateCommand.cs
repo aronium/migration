@@ -50,7 +50,7 @@ namespace Aronium.Migration.Commands
                     command.CommandText = Resources.LogMigration;
                     command.Parameters.Clear();
                     command.Parameters.AddWithValue("ScriptName", migration.FileName);
-                    command.Parameters.AddWithValue("Module", Module ?? Convert.DBNull);
+                    command.Parameters.AddWithValue("Module", migration.Module ?? Convert.DBNull);
 
                     command.ExecuteNonQuery();
                 }
