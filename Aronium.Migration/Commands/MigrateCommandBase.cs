@@ -1,7 +1,6 @@
 ﻿using Aronium.Migration.Models;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace Aronium.Migration.Commands
 {
@@ -95,9 +94,13 @@ namespace Aronium.Migration.Commands
                 return;
             }
 
+            var dir = args["dir"];
+            if (!string.IsNullOrEmpty(dir))
+                MigrationsDirectory = dir;
+
             Module = args["module"];
 
-            Console.WriteLine(string.Format("\nConnected to {0}\n", Database));
+            Console.WriteLine(string.Format("\nConnected to {0}. Using scripts directory: {1}\n", Database, MigrationsDirectory));
 
             if (!ValidateMigrationTableExistance())
             {
