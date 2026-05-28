@@ -19,7 +19,7 @@ namespace Aronium.Migration.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -66,6 +66,7 @@ namespace Aronium.Migration.Properties {
         ///	[Version] [varchar](20) NOT NULL,
         ///	[Description] [varchar](200) NULL,
         ///	[FileName] [varchar](100) NULL,
+        ///	[Module] [varchar](100) NULL,
         ///	[Date] [datetime] NOT NULL,
         /// CONSTRAINT [PK_Migration] PRIMARY KEY CLUSTERED 
         ///(
@@ -80,7 +81,7 @@ namespace Aronium.Migration.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration].
+        ///   Looks up a localized string similar to SELECT MAX(CONVERT(DECIMAL(10,4),[Version])) FROM [Migration] WHERE @Module IS NULL OR Module=@Module.
         /// </summary>
         internal static string GetCurrentVersion {
             get {
@@ -89,7 +90,7 @@ namespace Aronium.Migration.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT [ID],[Version],[Description],[FileName],[Date] FROM [Migration].
+        ///   Looks up a localized string similar to SELECT [ID],[Version],[Description],[FileName],[Module],[Date] FROM [Migration] WHERE @Module IS NULL OR [Module]=@Module.
         /// </summary>
         internal static string GetMigrations {
             get {
@@ -103,13 +104,15 @@ namespace Aronium.Migration.Properties {
         ///	[Version],
         ///	[Description],
         ///	[FileName],
+        ///	[Module],
         ///	[Date]
         ///) 
         ///VALUES 
         ///(
         ///	REPLACE(SUBSTRING(@scriptName, 0, CHARINDEX(&apos;__&apos;, @scriptName)), &apos;_&apos;, &apos;.&apos;),
         ///	REPLACE(SUBSTRING(@scriptName, CHARINDEX(&apos;__&apos;, @scriptName) + 2, LEN(@scriptName) - (CHARINDEX(&apos;__&apos;, @scriptName) + 5)), &apos;_&apos;, &apos; &apos;),
-        ///	@scriptName,
+        ///	@ScriptName,
+        ///	@Module,
         ///	GETDATE()
         ///).
         /// </summary>

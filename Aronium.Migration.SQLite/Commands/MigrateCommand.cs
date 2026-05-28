@@ -24,6 +24,13 @@ namespace Aronium.Migration.Commands
             {
                 connection.Open();
 
+                using (var pragmaCommand = connection.CreateCommand())
+                {
+                    // have Sqlite silently retry for up to 20 seconds before throwing 
+                    pragmaCommand.CommandText = "PRAGMA busy_timeout = 20000;";
+                    pragmaCommand.ExecuteNonQuery();
+                }
+
                 scriptText = Regex.Replace(scriptText, @";", SCRIPT_SPLIT_CHAR);
                 string[] commands = scriptText.Split(new string[] { SCRIPT_SPLIT_CHAR }, StringSplitOptions.RemoveEmptyEntries);
 
